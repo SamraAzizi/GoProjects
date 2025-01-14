@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/gorrila/mux"
 )
 
@@ -20,6 +22,11 @@ var movies []Movie
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFux("/movies", getMovies).Method("GET")
-	r.handleFunc("/movies")
+	r.HandleFux("/movies", getMovie).Methods("GET")
+	r.handleFunc("/movies/{id}", getMovie).Methods("GET")
+	r.handleFunc("/movies", createMovie).Methods("POST")
+	r.handleFunc("movies/{id}", updateMovie).Methods("PUT")
+	r.handleFunc("movies/{id}", deleteMovie).Methods("DELETE")
+
+	fmt.Printf("starting server at port 8000\n")
 }

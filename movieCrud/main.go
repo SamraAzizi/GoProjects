@@ -38,6 +38,7 @@ func deleteMovie(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+	json.NewEncoder(w).Encode(movies)
 }
 
 func getMovie(w http.ResponseWriter, r *http.Request) {
@@ -50,6 +51,13 @@ func getMovie(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+func createMovie(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content Type", "application/json")
+	var movie Movie
+	_ = json.NewDecoder(r.Body)
+
 }
 
 func main() {

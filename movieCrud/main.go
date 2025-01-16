@@ -67,6 +67,20 @@ func createMovie(w http.ResponseWriter, r *http.Request) {
 
 func updateMovie() {
 
+	w.Header().Set("Content-Type", "applicaiton/json")
+	//params
+	params := mux.Vars(r)
+	//loop over movies, range
+	//delete the movie with id that you have sent
+	//add a new movie
+
+	for index, item := range movies {
+		if item.ID == params["id"] {
+			movies = append(movies[:index], movies[index+1:]...)
+			var mvoie Movie
+		}
+	}
+
 }
 
 func main() {

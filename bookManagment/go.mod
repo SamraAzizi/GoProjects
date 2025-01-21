@@ -1,3 +1,4 @@
+
 module github.com/SamraAzizi/GoProjects
 
 go 1.23.3

@@ -5,41 +5,56 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/shomali11/slacker"
 )
 
-func printCommandEvents(analyticsChannel <-chan *slacker.CommandEvent){
-	for event := range analyticsChannel{
+// Function to print command events
+func printCommandEvents(analyticsChannel <-chan *slacker.CommandEvent) {
+	for event := range analyticsChannel {
 		fmt.Println("Command Events")
-		fmt.Println(event.Timestamp)
-		fmt.Println(event.Command)
-		fmt.Println(event.Parameters)
-		fmt.Println(event.Event)
+		fmt.Println("Timestamp:", event.Timestamp)
+		fmt.Println("Command:", event.Command)
+		fmt.Println("Parameters:", event.Parameters)
+		fmt.Println("Event:", event.Event)
 		fmt.Println()
 	}
 }
 
 func main() {
-	
-	bot := slacker.NewClient(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOEKN"))
+	// Set environment variables (move sensitive values to a .env file for security)
+	os.Setenv("SLACK_BOT_TOKEN", "")
+	os.Setenv("SLACK_APP_TOKEN", "")
 
+	// Initialize Slack bot client
+	bot := slacker.NewClient(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_APP_TOKEN"))
 
-	go printCommandEvents(bot.printCommandEvents())
+	// Start listening for command events asynchronously
+	go printCommandEvents(bot.CommandEvents())
 
-	bot.Command("my yob is <year>", &slacker.CommandDefinition){
-		Description : "yob Calculator",
-		Example : "my yob is 2025",
-		Handler : func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter){
+	// Define bot command
+	bot.Command("my yob is <year>", &slacker.CommandDefinition{
+		Description: "YOB Calculator",
+		Handler: func(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
 			year := request.Param("year")
-		}
-	}
+			yob, err := strconv.Atoi(year)
+			if err != nil {
+				response.Reply("Invalid year format. Please provide a valid number.")
+				return
+			}
+			age := 2025 - yob
+			response.Reply(fmt.Sprintf("Your age is %d", age))
+		},
+	})
 
+	// Create context to manage bot lifecycle
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	// Start bot listener
 	err := bot.Listen(ctx)
-	if err != nil{
+	if err != nil {
 		log.Fatal(err)
 	}
 }

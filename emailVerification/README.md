@@ -22,7 +22,13 @@ cd <repository-folder>
 
 ```
 
-##usage
+Build the application:
+
+```bash
+go build -o domain-checker
+```
+
+## usage
 
 Run the application:
 
@@ -39,3 +45,17 @@ google.com
 
 To exit, press Ctrl + D (Linux/Mac) or Ctrl + Z (Windows).
 
+## Output Format
+
+The program prints domain records in the following format:
+
+```bash
+domain, hasMX, hasSPF, spfRecord, hasDMARC, dmarcRecord
+example.com, true, true, v=spf1 include:_spf.example.com ~all, true, v=DMARC1; p=none;
+```
+
+
+### Instructions for Use
+1. Replace `<repository-url>` with the actual URL of your repository.
+2. Save this content in a file named `README.md` in the root of your project directory.
+3. Open the file in Visual Studio Code to view the formatted README.

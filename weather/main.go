@@ -45,6 +45,8 @@ func query(city string) (weatherData, error) {
 		return weatherData{}, err
 	}
 
+	http.Get("http://api.openweathermap.org/data/2./weather?APPID" + apiConfig.OpenWeatherMapApiKey)
+
 }
 func main() {
 	http.HandleFunc("/hello", hello)

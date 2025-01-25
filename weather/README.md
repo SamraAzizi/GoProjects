@@ -70,3 +70,28 @@ Hello from Go!
 
 
 ## Project Structure
+```bash
+weather-go-app/
+│-- main.go           # Main application code
+│-- apiConfig.json    # Configuration file for API key
+│-- README.md         # Documentation
+
+
+```
+
+## Error Handling
+- If the city name is not provided, the API will return an HTTP 400 error.
+
+- If the OpenWeatherMap API fails, an HTTP 500 error will be returned with the respective error message.
+
+## Troubleshooting
+
+1. Error: open apiConfig.json: The system cannot find the file specified.
+
+2. Make sure the apiConfig.json file exists in the root directory.
+Error: API request failed with status: 401
+
+4. Check if the provided API key in apiConfig.json is valid.
+Port conflict:
+
+5. If port 8000 is in use, change the port number in main.go inside http.ListenAndServe(":8000", nil).

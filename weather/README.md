@@ -26,6 +26,47 @@ Before running the project, ensure you have the following:
 
 1. Clone the repository:
 
-   ```sh
+   ```bash
    git clone https://github.com/yourusername/weather-go-app.git
    cd weather-go-app
+
+2. Create a file named apiConfig.json in the project root directory and add your API key:
+
+```bash
+{
+    "OpenWeatherMapApiKey": "your_api_key_here"
+}
+```
+
+3. Run the Go Application
+
+```bash
+go run main.go
+
+```
+4. You should see the message:
+```bash
+Starting server on port 8000...
+```
+
+
+## API Usage
+The server exposes the following endpoints:
+
+## 1. Hello Route
+
+- Endpoint: /hello
+- Method: GET
+- Example Request:
+
+```bash
+curl http://localhost:8000/hello
+
+```
+- Response:
+```bash
+Hello from Go!
+```
+
+
+## Project Structure

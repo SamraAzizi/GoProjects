@@ -52,7 +52,7 @@ func query(city string) (weatherData, error) {
 	}
 
 	// Construct the API request URL correctly
-	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?appid=%s&q=%s&units=metric", apiConfig.OpenWeatherMapApiKey, city)
+	url := fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?appid=%s&q=%s&units=metric", apiConfig.OpenWeatherMapApiKey+"&q="+city)
 	resp, err := http.Get(url)
 	if err != nil {
 		return weatherData{}, err

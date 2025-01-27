@@ -3,16 +3,18 @@ package main
 import (
 	"fmt"
 
+	"github.com/akhil/go-fiber-crm-basic/lead"
+
 	"github.com/akhil/go-fiber-crm-basic/database"
 	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
 )
 
 func setupRoutes(app *fiber.App) {
-	app.Get(getLeads)
-	app.Get(GetLead)
-	app.Post(newLead)
-	app.Delete(DeleteLead)
+	app.Get("/api/v1/lead", lead.getLeads)
+	app.Get("/api/v1/lead/:id", lead.GetLead)
+	app.Post("/api/v1/lead", lead.newLead)
+	app.Delete("/api/v1/lead/:id", lead.DeleteLead)
 }
 
 func initDatabase() {
@@ -23,6 +25,7 @@ func initDatabase() {
 	}
 	fmt.Println("connection opened to database")
 	database.DBConn.AutoMigrate(&lead.Lead{})
+	fmt.Println("database migrated")
 }
 func main() {
 	app := fiber.New()

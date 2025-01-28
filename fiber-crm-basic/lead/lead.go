@@ -2,7 +2,9 @@ package lead
 
 import (
 	"github.com/akhil/go-fiber-crm-basic/database"
+	"github.com/gofiber/fiber"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 type Lead struct {
@@ -42,5 +44,16 @@ func NewLead(c *fiber.Ctx) {
 }
 
 func DeleteLead(c *fiber.Ctx) {
+	id := c.Params
+	db := database.DBConn
+
+	var lead Lead
+	db.First(&lead, id)
+	if lead.Name == "" {
+		c.Status(500).Send("No lead found with ID")
+		return
+	}
+	db.Delete(&lead)
+	c.Send("Lead successfullt Deleted")
 
 }
